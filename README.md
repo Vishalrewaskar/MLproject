@@ -1,44 +1,47 @@
 
 # 📊 Student Performance Predictor 
 
-A complete end-to-end machine learning project that predicts student performance based on academic and socio-economic data. This project follows industry best practices for structuring, version control, data processing, model development, and deployment using Flask.
+A complete end-to-end machine learning project to predict student performance based on academic and socio-economic data. The project covers everything from data ingestion to model deployment, using a custom training pipeline to select the best model exceeding an R² threshold of 0.6.
+
+The final model (Ridge Regression) achieved an R² score of 0.88 on the test set.
+Deployed via Flask, containerized using Docker, and published to DockerHub.
 
 
 ## 🚀 Features
 
-- Data ingestion and preprocessing pipeline
-- EDA and data validation
-- Model training with hyperparameter tuning
-- Prediction pipeline
-- Flask-based deployment
-- Modular and production-ready structure
+- End-to-end model training pipeline with automated best-model selection.
+- Comparison of 9 regression algorithms with hyperparameter tuning.
+- Complete EDA, feature engineering, and preprocessing for numerical & categorical features.
+- Flask API for real-time predictions.
+- Dockerized application for consistent deployment.
+
 
 
 ## 📦 Tech Stack
 
-**Programming Language:** Python
-
-**Libraries & Tools:** Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn, Flask
-
-**Version Control:** Git & GitHub
-
-**Logging & Exception Handling:** Custom implementation
-
+- Python, Flask
+- Scikit-learn, XGBoost, CatBoost
+- Pandas, NumPy, Matplotlib, Seaborn
+- Docker for containerization
 ## 🛠️ Installation
 
-Clone the repository:
+1. Clone the repository:
 
 ```bash
-  git clone https://github.com/your-username/Student_Performance_Predictor.git
-  cd Student_Performance_Predictor
+  git clone https://github.com/<your-username>/student-performance.git
+  cd student-performance
+
 
 ```
-Create a virtual environment and install dependencies:
+2. Create a virtual environment and install dependencies:
 
 ```bash
-  python -m venv venv
-  source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+  ppython -m venv venv
+  source venv/bin/activate   # For Linux/Mac
+  venv\Scripts\activate      # For Windows
+
   pip install -r requirements.txt
+
 ```
 ##  💻 Run Locally
 
@@ -48,27 +51,82 @@ Start the Flask app:
   python app.py
 ```
 Open your browser and go to http://127.0.0.1:5000/
+
+##  🐳 Docker Deployment
+
+Build the Image
+
+```bash
+  docker build -t student-performance:latest .
+
+```
+
+Run the Container
+
+```bash
+  docker run -p 5000:5000 student-performance:latest
+```
+
+Push to Docker Hub
+```bash
+  docker tag student-performance:latest vishalrewaskar007/student-performance:tagname
+  docker push vishalrewaskar007/student-performance:tagname
+
+```
+
+
 ## 📁 Project Structure
 
 ```bash
 Student_Performance_Predictor/
-├── artifacts/                  # Saved datasets and model files
-├── src/                        # Core project source code
-│   ├── components/             # Data ingestion, transformation, training modules
-│   ├── pipeline/               # Training and prediction pipelines
-│   └── utils/                  # Utility and helper functions
-├── templates/                  # HTML templates for Flask frontend
-├── app.py                      # Flask app for deployment
+│
+├── .ebextensions/
+├── artifacts/
+├── catboost_info/
+├── logs/
+├── notebook/
+│   ├── 1. EDA STUDENT PERFORMANCE.ipynb
+│   ├── 2. MODEL TRAINING.ipynb
+│   └── data/
+│
+├── src/
+│   ├── components/
+│   │   ├── __init__.py
+│   │   ├── data_ingestion.py
+│   │   ├── data_transformation.py
+│   │   └── model_trainer.py
+│   │
+│   ├── pipeline/
+│   │   ├── __init__.py
+│   │   ├── predict_pipeline.py
+│   │   └── train_pipeline.py
+│   │
+│   ├── __init__.py
+│   ├── exception.py
+│   ├── logger.py
+│   └── utils.py
+│
+├── templates/
+│   ├── home.html
+│   └── index.html
+│
+├── app.py
+├── Dockerfile
+├── README.md
 ├── requirements.txt
-└── README.md
+├── setup.py
+└── .gitignore
 
 ```
-## 📈 Lessons Learned
+## 📌 How It Works
 
-- Structuring an ML project for scalability and reusability
-- Building custom data pipelines
-- Importance of clean data validation and transformation
-- Deploying models using Flask in a simple web interface
+**1. Data Ingestion →** Loads dataset and splits into train/test sets.
+
+**2. Data Transformation →** Preprocessing pipeline for numerical & categorical features.
+
+**3. Model Training →** Trains 9 regression models, selects the best with R² > 0.6.
+
+**4. Deployment →** Flask API for predictions, packaged into Docker for easy deployment.
 
 ## 📤 Deployment
 
@@ -86,5 +144,5 @@ Contributions are welcome! Fork the repo and open a pull request.
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+This project is licensed under the [MIT License.](https://choosealicense.com/licenses/mit/)
 
